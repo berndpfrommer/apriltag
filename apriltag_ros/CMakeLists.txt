@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
     apriltag_mit apriltag_umich apriltag_msgs
     )
 
-generate_dynamic_reconfigure_options(cfg/ApriltagDetectorDyn.cfg)
+generate_dynamic_reconfigure_options(cfg/ApriltagDetectorDyn.cfg cfg/ApriltagDetector2Dyn.cfg)
 
 catkin_package(
     INCLUDE_DIRS include
@@ -27,13 +27,14 @@ include_directories(
     ${OpenCV_INCLUDE_DIRS}
     )
 
-message(ERROR ${OpenCV_INCLUDE_DIRS})
-message(ERROR ${OpenCV_LIBRARIES})
 add_library(${PROJECT_NAME} src/apriltag_detector.cpp)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(apriltag_detector_node src/apriltag_detector_node.cpp)
 target_link_libraries(apriltag_detector_node ${PROJECT_NAME} ${OpenCV_LIBRARIES})
+
+add_executable(apriltag_detector_node_2 src/apriltag_detector_node_2.cpp)
+target_link_libraries(apriltag_detector_node_2 ${PROJECT_NAME} ${OpenCV_LIBRARIES})
 
 add_executable(apriltag_detect src/apriltag_detect.cpp)
 target_link_libraries(apriltag_detect ${PROJECT_NAME} ${OpenCV_LIBRARIES})
